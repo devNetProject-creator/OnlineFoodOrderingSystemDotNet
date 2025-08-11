@@ -6,7 +6,7 @@ namespace OnlineFoodOrderingSystem.Models
     {
 
         // FName, LNaME, eMAILId, MobileNumnber ,Passwrod //// Encryption,addr
-
+        [Key]
         [Required(ErrorMessage = "ID is required")]
         public int ID { get; set; }
         public string emailID { get; set; }
@@ -15,6 +15,8 @@ namespace OnlineFoodOrderingSystem.Models
         public int mobileNumber { get; set; }
         public string password { get; set; }
         public bool isActive { get; set; }
-        
+
+        public UserRole UserRoles { get; set; } 
+
     }
 }
