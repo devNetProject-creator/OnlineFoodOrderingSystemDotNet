@@ -2,11 +2,10 @@
 
 namespace OnlineFoodOrderingSystem.Controllers.Authentication
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class UserAuthenticationController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
     }
 }

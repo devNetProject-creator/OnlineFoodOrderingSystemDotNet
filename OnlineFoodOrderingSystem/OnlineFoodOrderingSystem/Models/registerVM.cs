@@ -16,7 +16,8 @@ namespace OnlineFoodOrderingSystem.Models
         public string password { get; set; }
         public bool isActive { get; set; }
 
-        public UserRole UserRoles { get; set; } 
+        // 1:N relationship → One RegisterVM can have many UserRoles
+        public ICollection<UserRole> UserRoles { get; set; }
 
     }
 }

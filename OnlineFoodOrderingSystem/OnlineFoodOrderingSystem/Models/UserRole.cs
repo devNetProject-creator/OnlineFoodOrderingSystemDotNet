@@ -1,13 +1,20 @@
-﻿namespace OnlineFoodOrderingSystem.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OnlineFoodOrderingSystem.Models
 {
     public class UserRole
     {
-        //public int Id { get; set; }
-        //public string Email { get; set; }
-        // Add other properties as needed, for example:
-        // public string UserName { get; set; }
-        // public string PasswordHash { 
-        public int userId { get; set; }
-        public string roles { get; set; }
+      
+        [Key]
+        public int UserRoleId { get; set; } // PK
+
+        // Foreign key to RegisterVM
+        public int RegisterVMId { get; set; }
+
+        // Role details
+        public string Role { get; set; }
+
+        // Navigation back to RegisterVM
+        public RegisterVM RegisterVM { get; set; }
     }
 }
