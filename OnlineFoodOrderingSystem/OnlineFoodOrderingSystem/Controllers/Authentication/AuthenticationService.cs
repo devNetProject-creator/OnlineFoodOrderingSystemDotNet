@@ -9,13 +9,34 @@ namespace OnlineFoodOrderingSystem.Controllers.Authentication
     [ApiController]
     public class AuthenticationService : ControllerBase
     {
+        private readonly IAuthenticationRepository _authenticationRepository;
+        public AuthenticationService(IAuthenticationRepository authenticationRepository)
+        {
+            _authenticationRepository = authenticationRepository;
+        }
+        [HttpPost]
         public IActionResult authenticateUser([FromBody] SignInDTO signInDTO)
         {
-           
-            
-            
+            var user=   _authenticationRepository.SignIn(signInDTO);
+
+            if(user==null)
+            {
+                return Unauthorized("Invalid credentials");
+            }
+            else
+            {
+                // Assuming user is not null, proceed with authentication   
+                // You can generate a token or set up a session here
+
+
+                return Ok("Authentication successful");
+
+            }
+
+
+
             // Implement login logic here
-            return Ok("Login successful");
+           
         }
 
         //user : FName, LNaME, eMAILId, MobileNumnber ,Passwrod //// Encryption,addr

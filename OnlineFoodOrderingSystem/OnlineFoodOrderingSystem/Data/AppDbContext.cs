@@ -17,12 +17,16 @@ namespace OnlineFoodOrderingSystem.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+
             base.OnModelCreating(modelBuilder);
             // Configure the one-to-many relationship between RegisterVM and UserRole
             modelBuilder.Entity<UserRole>()
                 .HasOne(ur => ur.RegisterVM)
                 .WithMany(r => r.UserRoles)
                 .HasForeignKey(ur => ur.RegisterVMId);
+
+            var userEntity = modelBuilder.Entity<RegisterVM>();
+            userEntity.HasIndex(u => u.emailID).IsUnique(); // Uniqu
 
 
         }

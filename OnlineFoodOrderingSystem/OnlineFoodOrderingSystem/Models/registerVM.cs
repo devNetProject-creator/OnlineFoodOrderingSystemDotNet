@@ -9,6 +9,8 @@ namespace OnlineFoodOrderingSystem.Models
         [Key]
         [Required(ErrorMessage = "ID is required")]
         public int ID { get; set; }
+
+
         public string emailID { get; set; }
         public string Fname { get; set; }
         public string LName { get; set; }       
