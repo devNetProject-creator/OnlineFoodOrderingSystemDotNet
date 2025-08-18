@@ -21,6 +21,16 @@ namespace OnlineFoodOrderingSystem.Controllers.Order
         }
 
 
+        [HttpGet("OrderStatus")]
+        [Authorize(Roles ="Admin")]
+        [Authorize(Roles = "Chef")]
+        public IActionResult OrderStatus()
+        {
+            return Ok("Return Order Status");
+        }
+
+
+
 
 
 

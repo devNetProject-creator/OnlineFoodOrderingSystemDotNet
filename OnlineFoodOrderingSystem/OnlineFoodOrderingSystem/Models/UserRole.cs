@@ -6,10 +6,11 @@ namespace OnlineFoodOrderingSystem.Models
     {
       
         [Key]
-        public int UserRoleId { get; set; } // PK
+        public int roleId { get; set; } // PK
+
 
         // Foreign key to RegisterVM
-        public int RegisterVMId { get; set; }
+       // public int RegisterVMId { get; set; }
 
         // Role details
         public string Role { get; set; }

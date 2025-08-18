@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.Azure.Documents;
 using Microsoft.EntityFrameworkCore;
 using OnlineFoodOrderingSystem.Models;
 
@@ -14,20 +15,35 @@ namespace OnlineFoodOrderingSystem.Data
 
         public DbSet<RegisterVM> registerUser { get; set; }
         public DbSet<UserRole> userRole { get; set; }
+        //public DbSet<Role> roles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            base.OnModelCreating(modelBuilder);
-            // Configure the one-to-many relationship between RegisterVM and UserRole
-            modelBuilder.Entity<UserRole>()
-                .HasOne(ur => ur.RegisterVM)
-                .WithMany(r => r.UserRoles)
-                .HasForeignKey(ur => ur.RegisterVMId);
+            // Configure 1:1 relationship between RegisterVM and UserRole
+            modelBuilder.Entity<RegisterVM>()
+                .HasOne(r => r.UserRoles)           // RegisterVM has one UserRole
+                .WithOne(ur => ur.RegisterVM)      // UserRole has one RegisterVM
+                .HasForeignKey<RegisterVM>(r => r.roleID)  // Foreign key in RegisterVM
+                .HasConstraintName("FK_RegisterVM_UserRole")
+                .OnDelete(DeleteBehavior.Restrict); // Prevent cascade delete
 
+            // Create index on foreign key
+            modelBuilder.Entity<RegisterVM>()
+                .HasIndex(r => r.roleID)
+                .HasDatabaseName("IX_RegisterVM_RoleID");
+
+
+
+            //Email ID unique key
             var userEntity = modelBuilder.Entity<RegisterVM>();
             userEntity.HasIndex(u => u.emailID).IsUnique(); // Uniqu
 
+            // Foreign Key for roleID 
+            // modelBuilder.Entity<RegisterVM>().HasOne(ur => )
+
+
+            base.OnModelCreating(modelBuilder);
 
         }
     }
