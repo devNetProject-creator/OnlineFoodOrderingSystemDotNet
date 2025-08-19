@@ -14,15 +14,16 @@ namespace OnlineFoodOrderingSystem.Controllers.Order
     {
 
         [HttpGet("secure")]
-
+        [Authorize(Roles = "Customer")]
         public IActionResult GetSecureData()
         {
             return Ok("You accessed a protected endpoint!");
         }
 
 
-        [HttpGet("OrderStatus")]
-        [Authorize(Roles ="Admin")]
+        
+        //[Authorize(Roles = "Admin")]
+        [HttpGet("secure-admin")]
         [Authorize(Roles = "Chef")]
         public IActionResult OrderStatus()
         {

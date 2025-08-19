@@ -14,13 +14,13 @@ namespace OnlineFoodOrderingSystem.Data
 
 
         public DbSet<RegisterVM> registerUser { get; set; }
-        public DbSet<UserRole> userRole { get; set; }
-        //public DbSet<Role> roles { get; set; }
+        public DbSet<UserRole> userrole { get; set; }
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            // Configure 1:1 relationship between RegisterVM and UserRole
+          //  Configure 1:1 relationship between RegisterVM and UserRole
             modelBuilder.Entity<RegisterVM>()
                 .HasOne(r => r.UserRoles)           // RegisterVM has one UserRole
                 .WithOne(ur => ur.RegisterVM)      // UserRole has one RegisterVM
@@ -35,12 +35,11 @@ namespace OnlineFoodOrderingSystem.Data
 
 
 
-            //Email ID unique key
+            ////Email ID unique key
             var userEntity = modelBuilder.Entity<RegisterVM>();
             userEntity.HasIndex(u => u.emailID).IsUnique(); // Uniqu
 
-            // Foreign Key for roleID 
-            // modelBuilder.Entity<RegisterVM>().HasOne(ur => )
+
 
 
             base.OnModelCreating(modelBuilder);

@@ -80,7 +80,7 @@ namespace OnlineFoodOrderingSystem.Migrations
 
                     b.HasKey("roleId");
 
-                    b.ToTable("userRole");
+                    b.ToTable("userrole");
                 });
 
             modelBuilder.Entity("OnlineFoodOrderingSystem.Models.RegisterVM", b =>

@@ -55,10 +55,14 @@ namespace OnlineFoodOrderingSystem.Controllers.Authentication
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
+            var userRole= _authenticationRepository.
+
             var claims = new[]
             {
-            new Claim(ClaimTypes.NameIdentifier, user.emailID.ToString())
-            
+            new Claim(ClaimTypes.NameIdentifier, user.emailID.ToString()),
+            new Claim("role", user)
+
+
         };
 
             var token = new JwtSecurityToken(

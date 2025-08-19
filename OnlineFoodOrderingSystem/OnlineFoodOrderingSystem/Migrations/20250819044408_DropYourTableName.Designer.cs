@@ -11,8 +11,8 @@ using OnlineFoodOrderingSystem.Data;
 namespace OnlineFoodOrderingSystem.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250818045938_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250819044408_DropYourTableName")]
+    partial class DropYourTableName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,75 +62,46 @@ namespace OnlineFoodOrderingSystem.Migrations
                     b.HasIndex("emailID")
                         .IsUnique();
 
-                    b.HasIndex("roleID");
+                    b.HasIndex("roleID")
+                        .IsUnique()
+                        .HasDatabaseName("IX_RegisterVM_RoleID");
 
                     b.ToTable("registerUser");
                 });
 
-            modelBuilder.Entity("OnlineFoodOrderingSystem.Models.Role", b =>
-                {
-                    b.Property<int>("RoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
-
-                    b.Property<string>("RoleName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("RoleId");
-
-                    b.ToTable("roles");
-                });
-
             modelBuilder.Entity("OnlineFoodOrderingSystem.Models.UserRole", b =>
                 {
-                    b.Property<int>("UserRoleId")
+                    b.Property<int>("roleId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserRoleId"));
-
-                    b.Property<int>("RegisterVMId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("roleId"));
 
                     b.Property<string>("Role")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserRoleId");
+                    b.HasKey("roleId");
 
-                    b.HasIndex("RegisterVMId");
-
-                    b.ToTable("userRole");
+                    b.ToTable("userrole");
                 });
 
             modelBuilder.Entity("OnlineFoodOrderingSystem.Models.RegisterVM", b =>
                 {
-                    b.HasOne("OnlineFoodOrderingSystem.Models.Role", "role")
-                        .WithMany()
-                        .HasForeignKey("roleID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.HasOne("OnlineFoodOrderingSystem.Models.UserRole", "UserRoles")
+                        .WithOne("RegisterVM")
+                        .HasForeignKey("OnlineFoodOrderingSystem.Models.RegisterVM", "roleID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_RegisterVM_UserRole");
 
-                    b.Navigation("role");
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("OnlineFoodOrderingSystem.Models.UserRole", b =>
                 {
-                    b.HasOne("OnlineFoodOrderingSystem.Models.RegisterVM", "RegisterVM")
-                        .WithMany("UserRoles")
-                        .HasForeignKey("RegisterVMId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.Navigation("RegisterVM")
                         .IsRequired();
-
-                    b.Navigation("RegisterVM");
-                });
-
-            modelBuilder.Entity("OnlineFoodOrderingSystem.Models.RegisterVM", b =>
-                {
-                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }
