@@ -22,9 +22,9 @@ namespace OnlineFoodOrderingSystem.Controllers.Order
 
 
         
-        //[Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin")]
         [HttpGet("secure-admin")]
-        [Authorize(Roles = "Chef")]
+        //[Authorize(Roles = "Chef")]
         public IActionResult OrderStatus()
         {
             return Ok("Return Order Status");
