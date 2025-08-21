@@ -43,24 +43,24 @@ namespace OnlineFoodOrderingSystem.Controllers.Authentication
             }
             else { 
 
-                var token = GenerateJwtToken(user);
+                var token =  GenerateJwtToken(user);
             return Ok(new { token });
             }
         }
 
 
-        private string GenerateJwtToken(RegisterVM user)
+        private async Task<string> GenerateJwtToken(RegisterVM user)
         {
             var jwtSettings = _config.GetSection("Jwt");
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-            var roleName = _authenticationRepository.GetUserRole(user.roleID);
-
+            var userRole = await _authenticationRepository.GetUserRole(user.roleID);
+            var rolename = userRole?.Role ?? string.Empty; // safe null handling   
             var claims = new[]
             {
             new Claim(ClaimTypes.NameIdentifier, user.emailID.ToString()),
-            new Claim("role", roleName.ToString())
+            new Claim("role", rolename)
 
 
         };
